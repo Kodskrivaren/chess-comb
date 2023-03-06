@@ -1,0 +1,38 @@
+[
+    { "id":"torn-svart-1", "img":"Torn_Svart_TP", "startBlock":"A-8"},
+    { "id":"häst-svart-1", "img":"Häst_Svart_TP", "startBlock":"B-8"},
+    { "id":"löpare-svart-1", "img":"Löpare_Svart_TP", "startBlock":"C-8"},
+    { "id":"drottning-svart", "img":"Drottning_Svart_TP", "startBlock":"D-8"},
+    { "id":"kung-svart", "img":"Kung_Svart_TP", "startBlock":"E-8"},
+    { "id":"löpare-svart-2", "img":"Löpare_Svart_TP", "startBlock":"F-8"},
+    { "id":"häst-svart-2", "img":"Häst_Svart_TP", "startBlock":"G-8"},
+    { "id":"torn-svart-2", "img":"Torn_Svart_TP", "startBlock":"H-8"},
+
+    { "id":"bonde-svart-1", "img":"Bonde_Svart_TP", "startBlock":"A-7"},
+    { "id":"bonde-svart-2", "img":"Bonde_Svart_TP", "startBlock":"B-7"},
+    { "id":"bonde-svart-3", "img":"Bonde_Svart_TP", "startBlock":"C-7"},
+    { "id":"bonde-svart-4", "img":"Bonde_Svart_TP", "startBlock":"D-7"},
+    { "id":"bonde-svart-5", "img":"Bonde_Svart_TP", "startBlock":"E-7"},
+    { "id":"bonde-svart-6", "img":"Bonde_Svart_TP", "startBlock":"F-7"},
+    { "id":"bonde-svart-7", "img":"Bonde_Svart_TP", "startBlock":"G-7"},
+    { "id":"bonde-svart-8", "img":"Bonde_Svart_TP", "startBlock":"H-7"},
+
+    { "id":"bonde-gul-1", "img":"Bonde_TP", "startBlock":"A-2"},
+    { "id":"bonde-gul-2", "img":"Bonde_TP", "startBlock":"B-2"},
+    { "id":"bonde-gul-3", "img":"Bonde_TP", "startBlock":"C-2"},
+    { "id":"bonde-gul-4", "img":"Bonde_TP", "startBlock":"D-2"},
+    { "id":"bonde-gul-5", "img":"Bonde_TP", "startBlock":"E-2"},
+    { "id":"bonde-gul-6", "img":"Bonde_TP", "startBlock":"F-2"},
+    { "id":"bonde-gul-7", "img":"Bonde_TP", "startBlock":"G-2"},
+    { "id":"bonde-gul-8", "img":"Bonde_TP", "startBlock":"H-2"},
+
+    { "id":"torn-gul-1", "img":"Torn_TP", "startBlock":"A-1"},
+    { "id":"häst-gul-1", "img":"Häst_TP", "startBlock":"B-1"},
+    { "id":"löpare-gul-1", "img":"Löpare_TP", "startBlock":"C-1"},
+    { "id":"drottning-gul", "img":"Drottning_TP", "startBlock":"D-1"},
+    { "id":"kung-gul", "img":"Kung_TP", "startBlock":"E-1"},
+    { "id":"löpare-gul-2", "img":"Löpare_TP", "startBlock":"F-1"},
+    { "id":"häst-gul-2", "img":"Häst_TP", "startBlock":"G-1"},
+    { "id":"torn-gul-2", "img":"Torn_TP", "startBlock":"H-1"}
+
+]
