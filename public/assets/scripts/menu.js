@@ -20,14 +20,19 @@ function setChoicesMenu() {
 
 function onlinePlayClick() {
   pageMenu.innerHTML = `
-  <input class="server-adress-input" placeholder="Type server adress here..."/>
+  <input type="password" class="server-adress-input" placeholder="Password"/>
   <p class="page-title" id="serverMessage" hidden></p>
   <button class="btn" onclick="attemptConnection()">Connect</button>`;
 }
 
 function attemptConnection() {
-  const adress = document.querySelector(".server-adress-input").value;
-  setUpSocketConnection(adress);
+  const password = document.querySelector(".server-adress-input").value;
+  const url = window.location.href;
+  const adress = `${url.includes("localhost") ? "ws" : "wss"}${url.substring(
+    url.indexOf(":"),
+    url.length
+  )}?password=${password}`;
+  setUpSocketConnection(adress, password);
 }
 
 function setGameOverScreen(winMessage) {
@@ -66,6 +71,7 @@ function setLostServerConnectionPage() {
   pageMenu.style = "";
   pageMenu.innerHTML = `
   <h2 class="page-title">Server connection lost!</h2>
+  <button class="btn" onclick="onlinePlayClick()">Return Multiplayer Screen</button>
   <button class="btn" onclick="setMainMenu()">Return to main menu</button>
   `;
 }

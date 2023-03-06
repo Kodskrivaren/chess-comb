@@ -1,9 +1,13 @@
 require("dotenv").config();
-const http = require("http");
+const express = require("express");
 const ws = require("ws");
+const app = express();
 
 const wss = new ws.Server({ noServer: true });
 const clients = new Set();
+
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 
 const rooms = [
   [{ player1: null, player2: null, playerTurn: 0 }],
@@ -180,8 +184,14 @@ function isServerFull() {
   return true;
 }
 
-if (!module.parent) {
-  http.createServer(accept).listen(Number(process.env.PORT));
-} else {
-  exports.accept = accept;
-}
+const server = app.listen(Number(process.env.PORT), () => {
+  console.log("Listening on port: " + process.env.PORT);
+});
+
+server.on("upgrade", (req, socket) => {
+  if (req.url.includes(`password=${process.env.PASSWORD}`)) {
+    accept(req, socket);
+  } else {
+    socket.end();
+  }
+});

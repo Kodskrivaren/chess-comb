@@ -2,7 +2,7 @@ let socket,
   currentRoomId = -1;
 
 function setUpSocketConnection(adress) {
-  socket = new WebSocket(adress);
+  socket = new WebSocket(adress, ["Test"]);
 
   socket.onopen = function (e) {
     console.log("Connection established");
