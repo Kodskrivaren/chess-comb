@@ -185,7 +185,7 @@ html,
   height: 100%;
 }
 .page-container .board-container .playfield .board-row .block .chess-piece-pic {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.15);
   transition: 0.2s;
 }
 .page-container .board-container .playfield .board-row .block .chess-piece-hover:hover {

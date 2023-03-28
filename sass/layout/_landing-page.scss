@@ -1,350 +1,376 @@
 @font-face {
-    font-family: myCustomFont;
-    src: url('./fonts/GideonRoman-Regular.ttf');
+  font-family: myCustomFont;
+  src: url("./fonts/GideonRoman-Regular.ttf");
 }
 
 html,
-.page-container{
-    background-image: url("../pictures/Block-brun.webp");
+.page-container {
+  background-image: url("../pictures/Block-brun.webp");
 }
 
-.page-container{
-    font-family: myCustomFont, Arial, Helvetica, sans-serif;
-    height: 100%;
-    width: 100vw;
+.page-container {
+  font-family: myCustomFont, Arial, Helvetica, sans-serif;
+  height: 100%;
+  width: 100vw;
 
-    font-weight: 1000;
-    font-size: 1.2rem;
+  font-weight: 1000;
+  font-size: 1.2rem;
 
-    .page-menu{
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        background-color: rgba(0, 0, 0, 0.9);
-        z-index: 5;
-        top: 0;
-        width: 100%;
-        min-height: 100%;
-        padding-bottom: 5em;
+  .page-menu {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 5;
+    top: 0;
+    width: 100%;
+    min-height: 100%;
+    padding-bottom: 5em;
+    margin: 0 auto;
+
+    .load-screen {
+      position: absolute;
+      .circle {
+        border-top: 5px solid rgb(187, 91, 2);
+        align-self: center;
+        width: 50px;
+        height: 50px;
         margin: 0 auto;
+        border-radius: 20em;
+        animation-name: loadCircle;
+        animation-duration: 2s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+      }
 
-        .load-screen{
-            position: absolute;
-            .circle{
-                border-top: 5px solid rgb(187, 91, 2);
-                align-self: center;
-                width: 50px;
-                height: 50px;
-                margin: 0 auto;
-                border-radius: 20em;
-                animation-name: loadCircle;
-                animation-duration: 2s;
-                animation-timing-function: linear;
-                animation-iteration-count: infinite;
-            }
-
-            @keyframes loadCircle {
-                from{transform: rotateZ(0);}
-                to{transform: rotateZ(360deg);}
-            }
-            .text{
-                color: rgb(187, 91, 2);
-            }
+      @keyframes loadCircle {
+        from {
+          transform: rotateZ(0);
         }
-
-        .server-adress-input,
-        .page-title,
-        .btn{
-            margin: 0 100%;
-            background-color: rgb(29, 14, 0);
-            color: rgb(187, 91, 2);
-            padding: 1em 2em;
-            font-size: 1.5rem;
-            border: 0.15em solid black;
+        to {
+          transform: rotateZ(360deg);
         }
-        
-        .page-title{
-            border-radius: 0.25em;
-            text-align: center;
-        }
-        
-        .server-adress-input,
-        .btn{
-            font-family: myCustomFont, Arial, Helvetica, sans-serif;
-            border-radius: 2em;
-            transition: 0.2s;
-        }
-
-        .btn:hover{
-            background-color: rgb(59, 29, 0);
-        }
-
-        .choice-menu{
-            width: 175px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .room-container{
-            background-color: $CdarkBrown;
-            display: flex;
-            max-width: 500px;
-            padding: 1em 0;
-            margin: 0 0.5em;
-            border-radius: 0.5em;
-            flex-wrap: wrap;
-            flex: 0 0 40%;
-            justify-content: center;
-            p{
-                color: $ClightBrown;
-                margin: 0 15%;
-            }
-            .btn{
-                flex: 0 0 50%;
-                height: 3em;
-                width: 20em;
-                font-size: 1.25rem;
-                padding: 0;
-                margin: 0.5em 0;
-            }
-            .btn:disabled{
-                background-image: linear-gradient(to bottom left, black, grey, black,grey,black,grey,black,grey,black,grey);
-                color: black;
-            }
-        }
-    }
-
-    .page-cover{
-        position: absolute;
-        z-index: 2;
-        top: 0;
-        width: 100%;
-        height: 93%;
-    }
-
-    .board-container{
-        position: relative;
-        display: block;
-        width: 360px;
-        margin: 20vh auto;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        border: 10px solid rgb(47, 26, 0);
-        border-radius: 5%;
-        background-color: rgb(29, 14, 0);
+      }
+      .text {
         color: rgb(187, 91, 2);
-        text-shadow: 5px 5px 3px black;
-
-        .letters{
-            display: flex;
-            flex: 0 0 320px;
-            height: 30px;
-            padding: 0 20px;
-            justify-content: space-around;
-            align-items: center;
-            text-align: center;
-        }
-        .letters:first-child{
-            div{
-                p{
-                    margin: 0;
-                    transform: rotateZ(180deg);
-                }
-            }
-        }
-        .numbers{
-            display: flex;
-            flex-direction: column-reverse;
-            justify-content: space-around;
-            flex: 0 0 20px;
-            text-align: center;
-            div{
-                p{
-                    margin: 0;
-                }
-            }
-        }
-        .numbers:nth-child(4){
-            div{
-                p{
-                    transform: rotateZ(180deg);
-                }
-            }
-        }
-        .playfield{
-            flex: 0 0 312px;
-            height: 309px;
-            box-shadow: 0 0 10px black;
-
-            .board-row{
-                .block:not(:last-child){
-                    border-right: 3px solid #85560f;
-                }
-            }
-            .board-row:not(:last-child){
-                .block{
-                    border-bottom: 3px solid #85560f;
-                }
-            }
-
-            .board-row{
-                display: flex;
-                width: 100%;
-                height: 39px;
-
-                .block{
-                    position: relative;
-                    height: 37px;
-                    width: 37px;
-                    
-                    .selector-img,
-                    .chess-piece-pic{
-                        width: 100%;
-                        height: 100%;
-                    }
-
-                    .chess-piece-pic{
-                        background-color: rgb(255, 255, 255, 0.1);
-                        transition: 0.2s;
-                    }
-
-                    .chess-piece-hover:hover{
-                        background-color: rgba(255, 255, 0, 0.349);
-                    }
-
-                    .red-flash{
-                        animation-name: red-flashing;
-                        animation-duration: 0.5s;
-                        animation-iteration-count: infinite;
-                    }
-
-                    @keyframes red-flashing {
-                        0%{ background-color: transparent;}
-                        50%{ background-color: rgba(255, 0, 0, 0.7);}
-                        100%{ background-color: transparent;}
-                    }
-
-                    .selector-img{
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        width: 100%;
-                        opacity: 0.5;
-                        animation-name: selectorRotation;
-                        animation-duration: 2s;
-                        animation-timing-function: linear;
-                        animation-iteration-count: infinite;
-                    }
-
-                    .selector-img:hover{
-                        background-color: #fff;
-                        opacity: 0.5;
-                        border-radius: 50%;
-                    }
-
-                    @keyframes selectorRotation{
-                        from{transform: rotateZ(0);}
-                        to{transform: rotateZ(360deg);}
-                    }
-                }
-            }
-            .board-row:nth-child(odd) .block:nth-child(odd){
-                // background-color: rgb(187, 91, 2);
-                background-image: url("../pictures/Block-gul.webp");
-            }
-            .board-row:nth-child(odd) .block:nth-child(even){
-                // background-color: rgb(59, 29, 0);
-                background-image: url("../pictures/Block-brun.webp");
-            }
-            .board-row:nth-child(even) .block:nth-child(odd){
-                // background-color: rgb(59, 29, 0);
-                background-image: url("../pictures/Block-brun.webp");
-            }
-            .board-row:nth-child(even) .block:nth-child(even){
-                // background-color: rgb(187, 91, 2);
-                background-image: url("../pictures/Block-gul.webp");
-            }
-        }
+      }
     }
-}
 
-@media screen and (min-width:768px) {
-    .page-container{
-        font-size: 2rem;
-        .board-container{
-            max-width: none;
-            width: 740px;
-            margin: 0 auto;
-            .letters{
-                height: 75px;
-                padding: 0 50px;
-                flex: 0 0 640px;
-            }
-            .numbers{
-                flex: 0 1 50px;
-            }
-            .playfield{
-                height: 635px;
-                width: 640px;
-                .board-row{
-                    .block{
-                        margin: 0;
-                        padding: 0;
-                    }
-                }
-                .board-row{
-                    .block:not(:last-child){
-                        border-right: 5px solid #85560f;
-                    }
-                }
-                .board-row:not(:last-child){
-                    .block{
-                        border-bottom: 5px solid #85560f;
-                    }
-                }
-                .board-row{
-                    height: 80px;
-                    .block{
-                        width: 75px;
-                        height: 75px;
-                    }
-                }
-            }
-        }
+    .server-adress-input,
+    .page-title,
+    .btn {
+      margin: 0 100%;
+      background-color: rgb(29, 14, 0);
+      color: rgb(187, 91, 2);
+      padding: 1em 2em;
+      font-size: 1.5rem;
+      border: 0.15em solid black;
     }
-}
 
-@media screen and (min-width:2000px) {
-    .page-container{
-        font-size: 2rem;
+    .page-title {
+      border-radius: 0.25em;
+      text-align: center;
+    }
+
+    .server-adress-input,
+    .btn {
+      font-family: myCustomFont, Arial, Helvetica, sans-serif;
+      border-radius: 2em;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      background-color: rgb(59, 29, 0);
+    }
+
+    .choice-menu {
+      width: 175px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .room-container {
+      background-color: $CdarkBrown;
+      display: flex;
+      max-width: 500px;
+      padding: 1em 0;
+      margin: 0 0.5em;
+      border-radius: 0.5em;
+      flex-wrap: wrap;
+      flex: 0 0 40%;
+      justify-content: center;
+      p {
+        color: $ClightBrown;
+        margin: 0 15%;
+      }
+      .btn {
+        flex: 0 0 50%;
+        height: 3em;
+        width: 20em;
+        font-size: 1.25rem;
+        padding: 0;
+        margin: 0.5em 0;
+      }
+      .btn:disabled {
+        background-image: linear-gradient(
+          to bottom left,
+          black,
+          grey,
+          black,
+          grey,
+          black,
+          grey,
+          black,
+          grey,
+          black,
+          grey
+        );
+        color: black;
+      }
+    }
+  }
+
+  .page-cover {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    width: 100%;
+    height: 93%;
+  }
+
+  .board-container {
+    position: relative;
+    display: block;
+    width: 360px;
+    margin: 20vh auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border: 10px solid rgb(47, 26, 0);
+    border-radius: 5%;
+    background-color: rgb(29, 14, 0);
+    color: rgb(187, 91, 2);
+    text-shadow: 5px 5px 3px black;
+
+    .letters {
+      display: flex;
+      flex: 0 0 320px;
+      height: 30px;
+      padding: 0 20px;
+      justify-content: space-around;
+      align-items: center;
+      text-align: center;
+    }
+    .letters:first-child {
+      div {
+        p {
+          margin: 0;
+          transform: rotateZ(180deg);
+        }
+      }
+    }
+    .numbers {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: space-around;
+      flex: 0 0 20px;
+      text-align: center;
+      div {
+        p {
+          margin: 0;
+        }
+      }
+    }
+    .numbers:nth-child(4) {
+      div {
+        p {
+          transform: rotateZ(180deg);
+        }
+      }
+    }
+    .playfield {
+      flex: 0 0 312px;
+      height: 309px;
+      box-shadow: 0 0 10px black;
+
+      .board-row {
+        .block:not(:last-child) {
+          border-right: 3px solid #85560f;
+        }
+      }
+      .board-row:not(:last-child) {
+        .block {
+          border-bottom: 3px solid #85560f;
+        }
+      }
+
+      .board-row {
+        display: flex;
         width: 100%;
-        .board-container{
-            max-width: none;
-            margin: 7vh auto;
-            width: 1200px;
-            .letters{
-                flex: 0 0 1000px;
-                padding: 0 100px;
+        height: 39px;
+
+        .block {
+          position: relative;
+          height: 37px;
+          width: 37px;
+
+          .selector-img,
+          .chess-piece-pic {
+            width: 100%;
+            height: 100%;
+          }
+
+          .chess-piece-pic {
+            background-color: rgb(255, 255, 255, 0.15);
+            transition: 0.2s;
+          }
+
+          .chess-piece-hover:hover {
+            background-color: rgba(255, 255, 0, 0.349);
+          }
+
+          .red-flash {
+            animation-name: red-flashing;
+            animation-duration: 0.5s;
+            animation-iteration-count: infinite;
+          }
+
+          @keyframes red-flashing {
+            0% {
+              background-color: transparent;
             }
-            .numbers{
-                flex: 0 1 8%;
+            50% {
+              background-color: rgba(255, 0, 0, 0.7);
             }
-            .playfield{
-                height: 995px;
-                width: 1000px;
-                .board-row{
-                    height: 125px;
-                    .block{
-                        width: 120px;
-                        height: 120px;
-                    }
-                }
+            100% {
+              background-color: transparent;
             }
+          }
+
+          .selector-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0.5;
+            animation-name: selectorRotation;
+            animation-duration: 2s;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+          }
+
+          .selector-img:hover {
+            background-color: #fff;
+            opacity: 0.5;
+            border-radius: 50%;
+          }
+
+          @keyframes selectorRotation {
+            from {
+              transform: rotateZ(0);
+            }
+            to {
+              transform: rotateZ(360deg);
+            }
+          }
         }
+      }
+      .board-row:nth-child(odd) .block:nth-child(odd) {
+        // background-color: rgb(187, 91, 2);
+        background-image: url("../pictures/Block-gul.webp");
+      }
+      .board-row:nth-child(odd) .block:nth-child(even) {
+        // background-color: rgb(59, 29, 0);
+        background-image: url("../pictures/Block-brun.webp");
+      }
+      .board-row:nth-child(even) .block:nth-child(odd) {
+        // background-color: rgb(59, 29, 0);
+        background-image: url("../pictures/Block-brun.webp");
+      }
+      .board-row:nth-child(even) .block:nth-child(even) {
+        // background-color: rgb(187, 91, 2);
+        background-image: url("../pictures/Block-gul.webp");
+      }
     }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .page-container {
+    font-size: 2rem;
+    .board-container {
+      max-width: none;
+      width: 740px;
+      margin: 0 auto;
+      .letters {
+        height: 75px;
+        padding: 0 50px;
+        flex: 0 0 640px;
+      }
+      .numbers {
+        flex: 0 1 50px;
+      }
+      .playfield {
+        height: 635px;
+        width: 640px;
+        .board-row {
+          .block {
+            margin: 0;
+            padding: 0;
+          }
+        }
+        .board-row {
+          .block:not(:last-child) {
+            border-right: 5px solid #85560f;
+          }
+        }
+        .board-row:not(:last-child) {
+          .block {
+            border-bottom: 5px solid #85560f;
+          }
+        }
+        .board-row {
+          height: 80px;
+          .block {
+            width: 75px;
+            height: 75px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  .page-container {
+    font-size: 2rem;
+    width: 100%;
+    .board-container {
+      max-width: none;
+      margin: 7vh auto;
+      width: 1200px;
+      .letters {
+        flex: 0 0 1000px;
+        padding: 0 100px;
+      }
+      .numbers {
+        flex: 0 1 8%;
+      }
+      .playfield {
+        height: 995px;
+        width: 1000px;
+        .board-row {
+          height: 125px;
+          .block {
+            width: 120px;
+            height: 120px;
+          }
+        }
+      }
+    }
+  }
 }
