@@ -71,6 +71,9 @@ function commandHandler(command) {
       socket = null;
       setOpponentLeftScreen();
       break;
+    case command.startsWith("castle"):
+      synchCastle(command);
+      break;
     default:
       console.log(command);
   }
@@ -88,6 +91,16 @@ function onConnectedToRoom(roomId) {
 
 function connectToRoom(roomId) {
   socket.send("join-room " + roomId);
+}
+
+function synchCastle(command) {
+  console.log("Synch castle move");
+  const commandArr = command.split(" ");
+  console.log(commandArr);
+  const piece1 = document.querySelector(`#${commandArr[1]}`);
+  const block1 = document.querySelector(`#${commandArr[2]}`);
+  const piece2 = document.querySelector(`#${commandArr[3]}`);
+  const block2 = document.querySelector(`#${commandArr[4]}`);
 }
 
 function synchronizeMove(command) {

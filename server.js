@@ -88,7 +88,7 @@ function on2Players(room) {
 
 function commandHandler(command, ws) {
   switch (true) {
-    case command.includes("moved-piece"):
+    case command.includes("moved-piece") || command.includes("castle"):
       updateMovedPiece(command, ws);
       break;
     case command.startsWith("join-room"):
@@ -140,7 +140,10 @@ function setPlayerToRoom(roomId, ws) {
 }
 
 function updateMovedPiece(command, ws) {
-  const commandArray = command.replace("moved-piece ", "").split(" ");
+  const commandArray = command
+    .replace("moved-piece ", "")
+    .replace("castle ", "")
+    .split(" ");
   const room = rooms[Number(commandArray[0])];
   if (
     (room.playerTurn == 1 && ws != room.player2) ||

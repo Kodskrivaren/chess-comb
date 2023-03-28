@@ -502,8 +502,15 @@ function addElementToSpecialMoveBlocks(
   specialMoveBlocks.push({
     element: element,
     func: () => {
-      moveHere(id, element.id);
-      moveHere(secondPieceId, secondBlockId);
+      moveHere(id, element.id, true);
+      moveHere(secondPieceId, secondBlockId, true);
+
+      if (gameMode == "online") {
+        socket.send(
+          `castle ${currentRoomId} ${id} ${element.id} ${secondPieceId} ${secondBlockId}`
+        );
+      }
+
       switchTurn();
     },
     mover: id,
@@ -515,12 +522,12 @@ function addElementToSpecialMoveBlocks(
   );
 }
 
-function moveHere(pieceId, blockId) {
+function moveHere(pieceId, blockId, skipOnlineSynch = false) {
   const chessPiece = document.querySelector("#" + pieceId);
 
   document.querySelector("#" + blockId).append(chessPiece);
 
-  if (gameMode == "online") {
+  if (gameMode == "online" && !skipOnlineSynch) {
     socket.send(`moved-piece ${currentRoomId} ${pieceId} ${blockId}`);
   }
 
