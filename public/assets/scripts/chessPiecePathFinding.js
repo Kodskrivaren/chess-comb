@@ -72,7 +72,8 @@ function checkPieceAlts(
   moveBlocks,
   attackBlocks,
   ignoreBlocks = [],
-  addClickEvents = true
+  addClickEvents = true,
+  ignoreCheckCastling = false
 ) {
   switch (true) {
     case id.startsWith("bonde"):
@@ -126,7 +127,8 @@ function checkPieceAlts(
         moveBlocks,
         attackBlocks,
         ignoreBlocks,
-        addClickEvents
+        addClickEvents,
+        ignoreCheckCastling
       );
       break;
     default:
@@ -140,7 +142,8 @@ function kingPiece(
   moveBlocks,
   attackBlocks,
   ignoreBlocks,
-  addClickEvents
+  addClickEvents,
+  ignoreCheckCastling
 ) {
   const nums = getNumsFromParentId(target.parentElement);
 
@@ -171,6 +174,84 @@ function kingPiece(
       moveBlocks.push(element.id);
     } else {
       addElementToMoveBlocks(element, id, moveBlocks);
+    }
+  }
+  !ignoreCheckCastling && checkKingCastleing(id, nums);
+}
+
+function canEnemyPiecesMoveHere(blockIds, colorSwe) {
+  const color = colorSwe == "gul" ? "svart" : "gul";
+  const moves = [];
+  for (let y = 0; y < playfield.childElementCount; y++) {
+    for (let x = 0; x < playfield.children[y].childElementCount; x++) {
+      const currentBlock = playfield.children[y].children[x];
+      if (
+        currentBlock.childElementCount > 0 &&
+        currentBlock.children[0].id.includes(color)
+      ) {
+        const target = currentBlock.children[0];
+        checkPieceAlts(target, target.id, moves, [], [], false, true);
+      }
+    }
+  }
+
+  return moves.filter((element) => blockIds.includes(element)).length > 0;
+}
+
+function checkKingCastleing(id, nums) {
+  const colorEng = id.includes("gul") ? "yellow" : "black";
+  const kingElement = playfield.querySelector("#" + id);
+  if (
+    !specialMoves[`${colorEng}KingMoved`] &&
+    !kingElement.className.includes("red-flash")
+  ) {
+    const y = 8 - nums[1];
+    const x = nums[0] - 1;
+    const colorSwe = id.includes("gul") ? "gul" : "svart";
+
+    if (!specialMoves[`${colorEng}Tower2Moved`]) {
+      const rightTowerBlock = playfield.children[y].children[x + 1];
+      const rightKingBlock = playfield.children[y].children[x + 2];
+      if (
+        (rightTowerBlock.childElementCount == 0 ||
+          rightTowerBlock.children[0].className == "selector-img") &&
+        rightKingBlock.childElementCount == 0 &&
+        !canEnemyPiecesMoveHere(
+          [rightKingBlock.id, rightTowerBlock.id],
+          colorSwe
+        )
+      ) {
+        const tower2 = playfield.querySelector(`#torn-${colorSwe}-2`);
+        addElementToSpecialMoveBlocks(
+          rightKingBlock,
+          id,
+          specialMoveBlocks,
+          tower2.id,
+          rightTowerBlock.id
+        );
+      }
+    }
+
+    if (!specialMoves[`${colorEng}Tower1Moved`]) {
+      const leftTowerBlock = playfield.children[y].children[x - 1];
+      const leftKingBlock = playfield.children[y].children[x - 2];
+      const leftEmptyBlock = playfield.children[y].children[x - 3];
+      if (
+        (leftTowerBlock.childElementCount == 0 ||
+          leftTowerBlock.children[0].className == "selector-img") &&
+        leftKingBlock.childElementCount == 0 &&
+        leftEmptyBlock.childElementCount == 0 &&
+        canEnemyPiecesMoveHere([leftKingBlock.id, leftTowerBlock.id], colorSwe)
+      ) {
+        const tower1 = playfield.querySelector(`#torn-${colorSwe}-1`);
+        addElementToSpecialMoveBlocks(
+          leftKingBlock,
+          id,
+          specialMoveBlocks,
+          tower1.id,
+          leftTowerBlock.id
+        );
+      }
     }
   }
 }
@@ -361,6 +442,7 @@ function addElementToAttackBlocks(element, id, attackBlocks) {
     element: element,
     func: () => {
       attackHere(id, element.id);
+      switchTurn();
     },
     mover: id,
   });
@@ -382,6 +464,9 @@ function checkElementForAttack(element, id) {
 }
 
 function addElementToMoveBlocks(element, id, moveBlocks) {
+  // console.log("addMoveBlock");
+  // console.log(element);
+  // console.log(id);
   let pieceCheck;
   if (gameMode == "AI") {
     pieceCheck = playerIsWhite ? "svart" : "gul";
@@ -394,6 +479,7 @@ function addElementToMoveBlocks(element, id, moveBlocks) {
     element: element,
     func: () => {
       moveHere(id, element.id);
+      switchTurn();
     },
     mover: id,
   });
@@ -401,21 +487,79 @@ function addElementToMoveBlocks(element, id, moveBlocks) {
   element.addEventListener("click", moveBlocks[moveBlocks.length - 1].func);
 }
 
+function addElementToSpecialMoveBlocks(
+  element,
+  id,
+  specialMoveBlocks,
+  secondPieceId,
+  secondBlockId
+) {
+  let pieceCheck;
+  if (gameMode == "AI") {
+    pieceCheck = playerIsWhite ? "svart" : "gul";
+  } else if (gameMode == "local") {
+    pieceCheck = whiteTurn ? "svart" : "gul";
+  }
+  !id.includes(pieceCheck) && element.append(createSelectorImg("Green"));
+
+  specialMoveBlocks.push({
+    element: element,
+    func: () => {
+      moveHere(id, element.id);
+      moveHere(secondPieceId, secondBlockId);
+      switchTurn();
+    },
+    mover: id,
+  });
+
+  element.addEventListener(
+    "click",
+    specialMoveBlocks[specialMoveBlocks.length - 1].func
+  );
+}
+
 function moveHere(pieceId, blockId) {
   const chessPiece = document.querySelector("#" + pieceId);
-
+  console.log(chessPiece);
+  console.log(blockId);
   document.querySelector("#" + blockId).append(chessPiece);
 
   if (gameMode == "online") {
     socket.send(`moved-piece ${currentRoomId} ${pieceId} ${blockId}`);
   }
 
+  checkMover(pieceId);
+
   resetPlayfield();
 
   const sound = new Audio("assets/sounds/move.wav");
   sound.play();
 
-  switchTurn();
+  // switchTurn();
+}
+
+function checkMover(id) {
+  if (id.includes("kung")) {
+    if (id.includes("svart")) {
+      specialMoves.blackKingMoved = true;
+    } else {
+      specialMoves.yellowKingMoved = true;
+    }
+  } else if (id.includes("torn")) {
+    if (id.includes("svart")) {
+      if (id.includes("1")) {
+        specialMoves.blackTower1Moved = true;
+      } else {
+        specialMoves.blackTower2Moved = true;
+      }
+    } else {
+      if (id.includes("1")) {
+        specialMoves.yellowTower1Moved = true;
+      } else {
+        specialMoves.yellowTower2Moved = true;
+      }
+    }
+  }
 }
 
 function attackHere(pieceId, blockId) {

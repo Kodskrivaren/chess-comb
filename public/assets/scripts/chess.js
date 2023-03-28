@@ -4,7 +4,8 @@ const jsonData = fetch("./assets/json/chessPieceData.json");
 const pageCover = document.querySelector(".page-cover");
 
 const moveBlocks = [],
-  attackBlocks = [];
+  attackBlocks = [],
+  specialMoveBlocks = [];
 
 // AI variables
 let AITurn, chessPieces, playerIsWhite;
@@ -16,6 +17,15 @@ let whiteTurn = true;
 let amIWhite = true,
   myTurn = false;
 
+const specialMoves = {
+  blackKingMoved: false,
+  blackTower1Moved: false,
+  blackTower2Moved: false,
+  yellowKingMoved: false,
+  yellowTower1Moved: false,
+  yellowTower2Moved: false,
+};
+
 let gameMode = ""; // modes: AI, local, online
 
 let blackPieceTimer = 85,
@@ -24,16 +34,23 @@ let blackPieceTimer = 85,
 (async () => {
   await Promise.all([jsonData]).then(async (response) => {
     chessPieces = await response[0].json();
-    setMainMenu();
+    // setMainMenu();
     createPlayfield();
+    localMultiplayerClick();
   });
 })();
 
 function localMultiplayerClick() {
-  playfield.parentElement.style = "";
+  // playfield.parentElement.style = "";
   gameMode = "local";
   whiteTurn = true;
   startGame();
+}
+
+function resetSpecialMoves() {
+  for (let index in specialMoves) {
+    specialMoves[index] = false;
+  }
 }
 
 function playAsWhite(choice) {
@@ -49,7 +66,8 @@ function playAsWhite(choice) {
 }
 
 function startGame() {
-  pageMenu.style = "visibility: hidden;";
+  // pageMenu.style = "visibility: hidden;";
+  resetSpecialMoves();
   it = 0;
   setTimeout(setUpblackPiece, 0);
 }
@@ -142,8 +160,8 @@ function createBasicPiece(id, img) {
   piece.id = id;
   piece.src = "assets/pictures/" + img + ".webp";
 
-  const sound = new Audio("assets/sounds/move.wav");
-  sound.play();
+  // const sound = new Audio("assets/sounds/move.wav");
+  // sound.play();
 
   return piece;
 }
@@ -264,13 +282,14 @@ function winConditionMet() {
 }
 
 function resetPlayfield() {
-  const arr = [...moveBlocks, ...attackBlocks];
+  const arr = [...moveBlocks, ...attackBlocks, ...specialMoveBlocks];
 
   for (let i = 0; i < arr.length; i++) {
     arr[i].element.removeEventListener("click", arr[i].func);
   }
   moveBlocks.splice(0, moveBlocks.length);
   attackBlocks.splice(0, attackBlocks.length);
+  specialMoveBlocks.splice(0, specialMoveBlocks.length);
 
   document.querySelectorAll(".selector-img").forEach((element) => {
     element.remove();
