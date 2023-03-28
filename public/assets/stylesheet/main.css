@@ -38,22 +38,10 @@ html,
   height: 50px;
   margin: 0 auto;
   border-radius: 20em;
-  -webkit-animation-name: loadCircle;
-          animation-name: loadCircle;
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-}
-@-webkit-keyframes loadCircle {
-  from {
-    transform: rotateZ(0);
-  }
-  to {
-    transform: rotateZ(360deg);
-  }
+  animation-name: loadCircle;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 @keyframes loadCircle {
   from {
@@ -204,23 +192,9 @@ html,
   background-color: rgba(255, 255, 0, 0.349);
 }
 .page-container .board-container .playfield .board-row .block .red-flash {
-  -webkit-animation-name: red-flashing;
-          animation-name: red-flashing;
-  -webkit-animation-duration: 0.5s;
-          animation-duration: 0.5s;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
-}
-@-webkit-keyframes red-flashing {
-  0% {
-    background-color: transparent;
-  }
-  50% {
-    background-color: rgba(255, 0, 0, 0.7);
-  }
-  100% {
-    background-color: transparent;
-  }
+  animation-name: red-flashing;
+  animation-duration: 0.5s;
+  animation-iteration-count: infinite;
 }
 @keyframes red-flashing {
   0% {
@@ -239,27 +213,15 @@ html,
   left: 0;
   width: 100%;
   opacity: 0.5;
-  -webkit-animation-name: selectorRotation;
-          animation-name: selectorRotation;
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
-  -webkit-animation-timing-function: linear;
-          animation-timing-function: linear;
-  -webkit-animation-iteration-count: infinite;
-          animation-iteration-count: infinite;
+  animation-name: selectorRotation;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 .page-container .board-container .playfield .board-row .block .selector-img:hover {
   background-color: #fff;
   opacity: 0.5;
   border-radius: 50%;
-}
-@-webkit-keyframes selectorRotation {
-  from {
-    transform: rotateZ(0);
-  }
-  to {
-    transform: rotateZ(360deg);
-  }
 }
 @keyframes selectorRotation {
   from {
@@ -350,7 +312,39 @@ html,
     height: 120px;
   }
 }
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
+}
+
+.turn-switch {
+  position: absolute;
+  top: 50%;
+  left: 47%;
+  z-index: 50;
+  background-color: rgb(29, 14, 0);
+  width: 5em;
+  padding: 0.25em 2em;
+  border-radius: 0.25em;
+  box-shadow: 0 0 1em black;
+  animation: turn-anim forwards 2s;
+}
+.turn-switch h3 {
+  text-align: center;
+  color: rgb(187, 91, 2);
+  font-size: 1.5rem;
+}
+
+@keyframes turn-anim {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
 }/*# sourceMappingURL=main.css.map */

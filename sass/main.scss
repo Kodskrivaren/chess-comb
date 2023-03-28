@@ -1,7 +1,39 @@
-@import './abstract/variables';
-@import './layout/_landing-page';
+@import "./abstract/variables";
+@import "./layout/_landing-page";
 
-html, body{
-    margin: 0;
-    padding: 0;
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.turn-switch {
+  position: absolute;
+  top: 50%;
+  left: 47%;
+  z-index: 50;
+  background-color: $CdarkBrown;
+  width: 5em;
+  h3 {
+    text-align: center;
+    color: $ClightBrown;
+    font-size: 1.5rem;
+  }
+  padding: 0.25em 2em;
+  border-radius: 0.25em;
+  box-shadow: 0 0 1em black;
+  animation: turn-anim forwards 2s;
+}
+
+@keyframes turn-anim {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
 }

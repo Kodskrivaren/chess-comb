@@ -98,7 +98,22 @@ function synchronizeMove(command) {
     block.childNodes[0].remove();
   }
   block.append(piece);
+  const sound = new Audio("assets/sounds/move.wav");
+  sound.play();
   myTurn = true;
+  displayMyTurn();
   winConditionMet();
   isKingInCheck();
+}
+
+function displayMyTurn() {
+  const myTurnHtml = `<h3>Your turn!</h3>`;
+  const div = document.createElement("div");
+  div.className = "turn-switch";
+  div.innerHTML = myTurnHtml;
+  document.body.firstChild.before(div);
+
+  setTimeout(() => {
+    div.remove();
+  }, 2500);
 }
