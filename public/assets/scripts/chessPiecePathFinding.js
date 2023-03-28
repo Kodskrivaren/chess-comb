@@ -464,9 +464,6 @@ function checkElementForAttack(element, id) {
 }
 
 function addElementToMoveBlocks(element, id, moveBlocks) {
-  // console.log("addMoveBlock");
-  // console.log(element);
-  // console.log(id);
   let pieceCheck;
   if (gameMode == "AI") {
     pieceCheck = playerIsWhite ? "svart" : "gul";
@@ -520,8 +517,7 @@ function addElementToSpecialMoveBlocks(
 
 function moveHere(pieceId, blockId) {
   const chessPiece = document.querySelector("#" + pieceId);
-  console.log(chessPiece);
-  console.log(blockId);
+
   document.querySelector("#" + blockId).append(chessPiece);
 
   if (gameMode == "online") {
@@ -534,8 +530,6 @@ function moveHere(pieceId, blockId) {
 
   const sound = new Audio("assets/sounds/move.wav");
   sound.play();
-
-  // switchTurn();
 }
 
 function checkMover(id) {

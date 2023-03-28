@@ -34,14 +34,14 @@ let blackPieceTimer = 85,
 (async () => {
   await Promise.all([jsonData]).then(async (response) => {
     chessPieces = await response[0].json();
-    // setMainMenu();
+    setMainMenu();
     createPlayfield();
-    localMultiplayerClick();
+    // localMultiplayerClick();
   });
 })();
 
 function localMultiplayerClick() {
-  // playfield.parentElement.style = "";
+  playfield.parentElement.style = "";
   gameMode = "local";
   whiteTurn = true;
   startGame();
@@ -66,7 +66,7 @@ function playAsWhite(choice) {
 }
 
 function startGame() {
-  // pageMenu.style = "visibility: hidden;";
+  pageMenu.style = "visibility: hidden;";
   resetSpecialMoves();
   it = 0;
   setTimeout(setUpblackPiece, 0);
@@ -160,8 +160,8 @@ function createBasicPiece(id, img) {
   piece.id = id;
   piece.src = "assets/pictures/" + img + ".webp";
 
-  // const sound = new Audio("assets/sounds/move.wav");
-  // sound.play();
+  const sound = new Audio("assets/sounds/move.wav");
+  sound.play();
 
   return piece;
 }
