@@ -74,6 +74,12 @@ function commandHandler(command) {
     case command.startsWith("castle"):
       synchCastle(command);
       break;
+    case command.startsWith("en-pessant"):
+      synchPessant(command);
+      break;
+    case command.startsWith("check-pessant"):
+      synchCheckPessant(command);
+      break;
     default:
       console.log(command);
   }
@@ -93,7 +99,22 @@ function connectToRoom(roomId) {
   socket.send("join-room " + roomId);
 }
 
+function synchCheckPessant(command) {
+  resetPlayfield();
+  enPessants.splice(0, enPessants.length);
+  const commandArr = command.split(" ");
+  checkEnpessant(commandArr[1], commandArr[2], true);
+}
+
+function synchPessant(command) {
+  const commandArr = command.split(" ");
+  playfield.querySelector(`#${commandArr[1]}`).children[0].remove();
+  enPessants.splice(0, enPessants.length);
+  resetPlayfield();
+}
+
 function synchCastle(command) {
+  enPessants.splice(0, enPessants.length);
   const commandArr = command.split(" ");
   const piece1 = document.querySelector(`#${commandArr[1]}`);
   const block1 = document.querySelector(`#${commandArr[2]}`);
@@ -114,6 +135,7 @@ function synchCastle(command) {
 }
 
 function synchronizeMove(command) {
+  enPessants.splice(0, enPessants.length);
   const commandArr = command.split(" ");
   const piece = document.querySelector(`#${commandArr[1]}`);
   const block = document.querySelector(`#${commandArr[2]}`);

@@ -100,6 +100,12 @@ function commandHandler(command, ws) {
       onLeaveRoom(leaveRoomId, ws);
       synchronizeRooms(ws);
       break;
+    case command.includes("en-pessant"):
+      handleEnPessant(command, ws);
+      break;
+    case command.includes("check-pessant"):
+      handleCheckEnPessant(command, ws);
+      break;
     default:
       console.log("Unkown command: " + command);
       break;
@@ -137,6 +143,28 @@ function setPlayerToRoom(roomId, ws) {
 
   synchronizeRooms(ws);
   ws.send("connected-room " + roomId);
+}
+
+function handleCheckEnPessant(command, ws) {
+  const commandArray = command.replace("check-pessant ", "").split(" ");
+  const room = rooms[Number(commandArray[0])];
+  const message = `check-pessant ${commandArray[1]} ${commandArray[2]}`;
+  if (room.playerTurn == 0) {
+    room.player1.send(message);
+  } else {
+    room.player2.send(message);
+  }
+}
+
+function handleEnPessant(command, ws) {
+  const commandArray = command.replace("en-pessant ", "").split(" ");
+  const room = rooms[Number(commandArray[0])];
+  const message = `en-pessant ${commandArray[1]}`;
+  if (room.playerTurn == 0) {
+    room.player1.send(message);
+  } else {
+    room.player2.send(message);
+  }
 }
 
 function updateMovedPiece(command, ws) {

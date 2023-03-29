@@ -373,7 +373,6 @@ function bondePiece(target, id, moveBlocks, attackBlocks, addClickEvents) {
 
   for (let pess of enPessants) {
     if (pess.pieceId == id) {
-      console.log(`${id} can do en pessant!`);
       addEnPessant(moveBlocks, pess);
     }
   }
@@ -485,6 +484,11 @@ function addEnPessant(moveBlocks, pessantInfo) {
     func: () => {
       moveHere(pessantInfo.pieceId, pessantInfo.moveBlock.id, false, false);
       pessantInfo.attackBlock.children[0].remove();
+      if (gameMode == "online") {
+        socket.send(
+          `en-pessant ${currentRoomId} ${pessantInfo.attackBlock.id}`
+        );
+      }
       switchTurn();
     },
     mover: pessantInfo.pieceId,
@@ -579,7 +583,10 @@ function moveHere(
   sound.play();
 }
 
-function checkEnpessant(pieceId, blockId) {
+function checkEnpessant(pieceId, blockId, ignoreServerSend = false) {
+  if (gameMode == "online" && !ignoreServerSend) {
+    socket.send(`check-pessant ${currentRoomId} ${pieceId} ${blockId}`);
+  }
   const checkColor = pieceId.includes("gul") ? "svart" : "gul";
   const nums = getNumsFromParentId(playfield.querySelector(`#${blockId}`));
   const x = nums[0] - 1;
@@ -595,7 +602,6 @@ function checkEnpessant(pieceId, blockId) {
     if (block.childElementCount > 0) {
       const piece = block.children[0];
       if (piece.id.includes(checkColor)) {
-        console.log("En pessant detected!");
         const yChange = checkColor == "svart" ? 1 : -1;
         const attackBlock = playfield.children[y].children[x];
         const moveBlock = playfield.children[y + yChange].children[x];
