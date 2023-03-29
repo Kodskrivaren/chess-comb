@@ -497,7 +497,7 @@ function addElementToSpecialMoveBlocks(
   } else if (gameMode == "local") {
     pieceCheck = whiteTurn ? "svart" : "gul";
   }
-  !id.includes(pieceCheck) && element.append(createSelectorImg("Green"));
+  !id.includes(pieceCheck) && element.append(createSelectorImg("Yellow"));
 
   specialMoveBlocks.push({
     element: element,
