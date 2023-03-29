@@ -116,7 +116,9 @@ function synchCheckPessant(command) {
 
 function synchPessant(command) {
   const commandArr = command.split(" ");
-  playfield.querySelector(`#${commandArr[1]}`).children[0].remove();
+  const piece = playfield.querySelector(`#${commandArr[1]}`).children[0];
+  addCapturedPiece(piece.src);
+  piece.remove();
   enPessants.splice(0, enPessants.length);
   resetPlayfield();
 }
@@ -148,6 +150,7 @@ function synchronizeMove(command) {
   const piece = document.querySelector(`#${commandArr[1]}`);
   const block = document.querySelector(`#${commandArr[2]}`);
   if (block.children.length > 0) {
+    addCapturedPiece(block.children[0].src);
     block.childNodes[0].remove();
   }
   if (commandArr[1].includes("kung")) {

@@ -243,6 +243,46 @@ html,
 .page-container .board-container .playfield .board-row:nth-child(even) .block:nth-child(even) {
   background-image: url("../pictures/Block-gul.webp");
 }
+.page-container .board-container .taken-pieces {
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+.page-container .board-container .taken-pieces .yellow,
+.page-container .board-container .taken-pieces .black {
+  position: absolute;
+  height: 100%;
+  width: 5em;
+  border-radius: 5em;
+  background-image: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.15) 50%, transparent 100%);
+}
+.page-container .board-container .taken-pieces .yellow img,
+.page-container .board-container .taken-pieces .black img {
+  width: 3.5em;
+  border-radius: 5em;
+  transform: rotateZ(180deg);
+}
+.page-container .board-container .taken-pieces .yellow img:nth-child(even),
+.page-container .board-container .taken-pieces .black img:nth-child(even) {
+  margin: -6em 0 0 1em;
+}
+.page-container .board-container .taken-pieces .yellow img:nth-child(odd),
+.page-container .board-container .taken-pieces .black img:nth-child(odd) {
+  margin: -6em 1em 0 0;
+}
+.page-container .board-container .taken-pieces .yellow img:first-child,
+.page-container .board-container .taken-pieces .black img:first-child {
+  margin: 0;
+}
+.page-container .board-container .taken-pieces .black {
+  top: 0;
+  left: -4em;
+  transform: rotateZ(180deg);
+}
+.page-container .board-container .taken-pieces .yellow {
+  bottom: 0;
+  right: -4em;
+}
 
 @media screen and (min-width: 768px) {
   .page-container {

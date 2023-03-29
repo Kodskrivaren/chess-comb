@@ -2,6 +2,8 @@ const playfield = document.querySelector(".playfield");
 const pageMenu = document.querySelector(".page-menu");
 const jsonData = fetch("./assets/json/chessPieceData.json");
 const pageCover = document.querySelector(".page-cover");
+const blackCaptured = document.querySelector(".black");
+const yellowCaptured = document.querySelector(".yellow");
 
 const moveBlocks = [],
   attackBlocks = [],
@@ -69,8 +71,20 @@ function playAsWhite(choice) {
 function startGame() {
   pageMenu.style = "visibility: hidden;";
   resetSpecialMoves();
+  blackCaptured.innerHTML = "";
+  yellowCaptured.innerHTML = "";
   it = 0;
   setTimeout(setUpblackPiece, 0);
+}
+
+function addCapturedPiece(img) {
+  const newImg = document.createElement("img");
+  newImg.src = img;
+  if (img.includes("Svart")) {
+    blackCaptured.append(newImg);
+  } else {
+    yellowCaptured.append(newImg);
+  }
 }
 
 function removeAllPieces() {

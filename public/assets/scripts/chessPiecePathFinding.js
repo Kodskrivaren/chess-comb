@@ -658,6 +658,7 @@ function checkPawnPromotion(id, ignoreServerSync = false) {
 function attackHere(pieceId, blockId) {
   const block = document.querySelector("#" + blockId);
 
+  addCapturedPiece(block.children[0].src);
   block.children[0].remove();
 
   moveHere(pieceId, blockId);

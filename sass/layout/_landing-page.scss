@@ -296,6 +296,47 @@ html,
         background-image: url("../pictures/Block-gul.webp");
       }
     }
+    .taken-pieces {
+      top: 0;
+      left: 0;
+      z-index: 2;
+      .yellow,
+      .black {
+        position: absolute;
+        height: 100%;
+        width: 5em;
+        border-radius: 5em;
+        background-image: linear-gradient(
+          to right,
+          transparent 0%,
+          rgb(255, 255, 255, 0.15) 50%,
+          transparent 100%
+        );
+        img {
+          width: 3.5em;
+          border-radius: 5em;
+          transform: rotateZ(180deg);
+        }
+        img:nth-child(even) {
+          margin: -6em 0 0 1em;
+        }
+        img:nth-child(odd) {
+          margin: -6em 1em 0 0;
+        }
+        img:first-child {
+          margin: 0;
+        }
+      }
+      .black {
+        top: 0;
+        left: -4em;
+        transform: rotateZ(180deg);
+      }
+      .yellow {
+        bottom: 0;
+        right: -4em;
+      }
+    }
   }
 }
 
