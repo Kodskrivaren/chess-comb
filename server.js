@@ -153,10 +153,13 @@ function updateMovedPiece(command, ws) {
     return;
   }
   room.playerTurn = (room.playerTurn + 1) % 2;
+  const message = command.includes("castle")
+    ? `castle ${commandArray[1]} ${commandArray[2]} ${commandArray[3]} ${commandArray[4]}`
+    : `moved ${commandArray[1]} ${commandArray[2]}`;
   if (room.playerTurn == 0) {
-    room.player1.send(`moved ${commandArray[1]} ${commandArray[2]}`);
+    room.player1.send(message);
   } else {
-    room.player2.send(`moved ${commandArray[1]} ${commandArray[2]}`);
+    room.player2.send(message);
   }
 }
 

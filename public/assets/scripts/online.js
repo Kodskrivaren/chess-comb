@@ -94,13 +94,23 @@ function connectToRoom(roomId) {
 }
 
 function synchCastle(command) {
-  console.log("Synch castle move");
   const commandArr = command.split(" ");
-  console.log(commandArr);
   const piece1 = document.querySelector(`#${commandArr[1]}`);
   const block1 = document.querySelector(`#${commandArr[2]}`);
   const piece2 = document.querySelector(`#${commandArr[3]}`);
   const block2 = document.querySelector(`#${commandArr[4]}`);
+  block1.append(piece1);
+  block2.append(piece2);
+  if (commandArr[1].includes("svart")) {
+    specialMoves.blackKingMoved = true;
+  } else {
+    specialMoves.yellowKingMoved = true;
+  }
+  const sound = new Audio("assets/sounds/move.wav");
+  sound.play();
+  myTurn = true;
+  displayMyTurn();
+  isKingInCheck();
 }
 
 function synchronizeMove(command) {
