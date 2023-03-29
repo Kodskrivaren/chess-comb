@@ -649,6 +649,9 @@ function checkPawnPromotion(id, ignoreServerSync = false) {
       `Bonde_${imgColor}TP`,
       `Drottning_${imgColor}TP`
     );
+    if (gameMode == "online" && !ignoreServerSync) {
+      socket.send(`promote ${currentRoomId} ${id}`);
+    }
   }
 }
 

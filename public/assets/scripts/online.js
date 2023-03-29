@@ -80,6 +80,9 @@ function commandHandler(command) {
     case command.startsWith("check-pessant"):
       synchCheckPessant(command);
       break;
+    case command.startsWith("promote"):
+      synchPromotion(command);
+      break;
     default:
       console.log(command);
   }
@@ -97,6 +100,11 @@ function onConnectedToRoom(roomId) {
 
 function connectToRoom(roomId) {
   socket.send("join-room " + roomId);
+}
+
+function synchPromotion(command) {
+  const id = command.replace("promote ", "");
+  checkPawnPromotion(id, true);
 }
 
 function synchCheckPessant(command) {
@@ -141,6 +149,27 @@ function synchronizeMove(command) {
   const block = document.querySelector(`#${commandArr[2]}`);
   if (block.children.length > 0) {
     block.childNodes[0].remove();
+  }
+  if (commandArr[1].includes("kung")) {
+    if (commandArr[1].includes("svart")) {
+      specialMoves.blackKingMoved = true;
+    } else {
+      specialMoves.yellowKingMoved = true;
+    }
+  } else if (commandArr[1].includes("torn")) {
+    if (commandArr[1].includes("svart")) {
+      if (commandArr[1].includes("1")) {
+        specialMoves.blackTower1Moved = true;
+      } else {
+        specialMoves.blackTower2Moved = true;
+      }
+    } else {
+      if (commandArr[1].includes("1")) {
+        specialMoves.yellowTower1Moved = true;
+      } else {
+        specialMoves.yellowTower2Moved = true;
+      }
+    }
   }
   block.append(piece);
   const sound = new Audio("assets/sounds/move.wav");

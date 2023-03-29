@@ -75,7 +75,7 @@ function checkForMove() {
     );
   });
 
-  console.log(filteredMoves);
+  // console.log(filteredMoves);
 
   if (filteredMoves.length > 0) {
     filteredMoves[0].func();

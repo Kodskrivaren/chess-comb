@@ -106,6 +106,9 @@ function commandHandler(command, ws) {
     case command.includes("check-pessant"):
       handleCheckEnPessant(command, ws);
       break;
+    case command.includes("promote"):
+      handlePromotion(command, ws);
+      break;
     default:
       console.log("Unkown command: " + command);
       break;
@@ -143,6 +146,17 @@ function setPlayerToRoom(roomId, ws) {
 
   synchronizeRooms(ws);
   ws.send("connected-room " + roomId);
+}
+
+function handlePromotion(command, ws) {
+  const commandArr = command.replace("promote ", "").split(" ");
+  const room = rooms[Number(commandArr[0])];
+  const message = `promote ${commandArr[1]}`;
+  if (room.playerTurn == 0) {
+    room.player1.send(message);
+  } else {
+    room.player2.send(message);
+  }
 }
 
 function handleCheckEnPessant(command, ws) {
