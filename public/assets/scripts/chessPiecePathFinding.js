@@ -632,6 +632,23 @@ function checkMover(id) {
         specialMoves.yellowTower2Moved = true;
       }
     }
+  } else if (id.includes("bonde")) {
+    checkPawnPromotion(id);
+  }
+}
+
+function checkPawnPromotion(id, ignoreServerSync = false) {
+  const y = id.includes("gul") ? 0 : 7;
+
+  const pawn = playfield.children[y].querySelector(`#${id}`);
+
+  if (pawn != null) {
+    const imgColor = id.includes("gul") ? "" : "Svart_";
+    pawn.id = pawn.id.replace("bonde", "drottning");
+    pawn.src = pawn.src.replace(
+      `Bonde_${imgColor}TP`,
+      `Drottning_${imgColor}TP`
+    );
   }
 }
 
