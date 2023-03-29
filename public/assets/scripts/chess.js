@@ -5,7 +5,8 @@ const pageCover = document.querySelector(".page-cover");
 
 const moveBlocks = [],
   attackBlocks = [],
-  specialMoveBlocks = [];
+  specialMoveBlocks = [],
+  enPessants = [];
 
 // AI variables
 let AITurn, chessPieces, playerIsWhite;

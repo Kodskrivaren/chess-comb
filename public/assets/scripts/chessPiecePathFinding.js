@@ -371,6 +371,13 @@ function tornPiece(
 function bondePiece(target, id, moveBlocks, attackBlocks, addClickEvents) {
   const nums = getNumsFromParentId(target.parentElement);
 
+  for (let pess of enPessants) {
+    if (pess.pieceId == id) {
+      console.log(`${id} can do en pessant!`);
+      addEnPessant(moveBlocks, pess);
+    }
+  }
+
   const step = id.includes("gul") ? 0 : 2;
 
   const y = 7 - nums[1] + step;
@@ -412,7 +419,7 @@ function bondePiece(target, id, moveBlocks, attackBlocks, addClickEvents) {
     if (addClickEvents != undefined && !addClickEvents) {
       moveBlocks.push(element2.id);
     } else {
-      addElementToMoveBlocks(element2, id, moveBlocks);
+      addElementToMoveBlocks(element2, id, moveBlocks, true);
     }
   } else if (y === 2 && id.includes("svart")) {
     const element2 = playfield.children[y + 1].children[x];
@@ -424,7 +431,7 @@ function bondePiece(target, id, moveBlocks, attackBlocks, addClickEvents) {
     if (addClickEvents != undefined && !addClickEvents) {
       moveBlocks.push(element2.id);
     } else {
-      addElementToMoveBlocks(element2, id, moveBlocks);
+      addElementToMoveBlocks(element2, id, moveBlocks, true);
     }
   }
 }
@@ -463,7 +470,33 @@ function checkElementForAttack(element, id) {
   return false;
 }
 
-function addElementToMoveBlocks(element, id, moveBlocks) {
+function addEnPessant(moveBlocks, pessantInfo) {
+  let pieceCheck;
+  if (gameMode == "AI") {
+    pieceCheck = playerIsWhite ? "svart" : "gul";
+  } else if (gameMode == "local") {
+    pieceCheck = whiteTurn ? "svart" : "gul";
+  }
+  !pessantInfo.pieceId.includes(pieceCheck) &&
+    pessantInfo.moveBlock.append(createSelectorImg("Yellow"));
+
+  moveBlocks.push({
+    element: pessantInfo.moveBlock,
+    func: () => {
+      moveHere(pessantInfo.pieceId, pessantInfo.moveBlock.id, false, false);
+      pessantInfo.attackBlock.children[0].remove();
+      switchTurn();
+    },
+    mover: pessantInfo.pieceId,
+  });
+
+  pessantInfo.moveBlock.addEventListener(
+    "click",
+    moveBlocks[moveBlocks.length - 1].func
+  );
+}
+
+function addElementToMoveBlocks(element, id, moveBlocks, checkPessant = false) {
   let pieceCheck;
   if (gameMode == "AI") {
     pieceCheck = playerIsWhite ? "svart" : "gul";
@@ -471,11 +504,10 @@ function addElementToMoveBlocks(element, id, moveBlocks) {
     pieceCheck = whiteTurn ? "svart" : "gul";
   }
   !id.includes(pieceCheck) && element.append(createSelectorImg("Green"));
-
   moveBlocks.push({
     element: element,
     func: () => {
-      moveHere(id, element.id);
+      moveHere(id, element.id, false, checkPessant);
       switchTurn();
     },
     mover: id,
@@ -522,7 +554,12 @@ function addElementToSpecialMoveBlocks(
   );
 }
 
-function moveHere(pieceId, blockId, skipOnlineSynch = false) {
+function moveHere(
+  pieceId,
+  blockId,
+  skipOnlineSynch = false,
+  checkPessant = false
+) {
   const chessPiece = document.querySelector("#" + pieceId);
 
   document.querySelector("#" + blockId).append(chessPiece);
@@ -534,9 +571,38 @@ function moveHere(pieceId, blockId, skipOnlineSynch = false) {
   checkMover(pieceId);
 
   resetPlayfield();
+  enPessants.splice(0, enPessants.length);
+
+  checkPessant && checkEnpessant(pieceId, blockId);
 
   const sound = new Audio("assets/sounds/move.wav");
   sound.play();
+}
+
+function checkEnpessant(pieceId, blockId) {
+  const checkColor = pieceId.includes("gul") ? "svart" : "gul";
+  const nums = getNumsFromParentId(playfield.querySelector(`#${blockId}`));
+  const x = nums[0] - 1;
+  const y = 8 - nums[1];
+  const pessantPieces = [];
+  if (x - 1 >= 0) {
+    pessantPieces.push(playfield.children[y].children[x - 1]);
+  }
+  if (x + 1 <= 7) {
+    pessantPieces.push(playfield.children[y].children[x + 1]);
+  }
+  for (let block of pessantPieces) {
+    if (block.childElementCount > 0) {
+      const piece = block.children[0];
+      if (piece.id.includes(checkColor)) {
+        console.log("En pessant detected!");
+        const yChange = checkColor == "svart" ? 1 : -1;
+        const attackBlock = playfield.children[y].children[x];
+        const moveBlock = playfield.children[y + yChange].children[x];
+        enPessants.push({ pieceId: piece.id, attackBlock, moveBlock });
+      }
+    }
+  }
 }
 
 function checkMover(id) {
