@@ -165,7 +165,7 @@ html,
       align-items: center;
       text-align: center;
     }
-    .letters:first-child {
+    .letters:nth-child(2) {
       div {
         p {
           margin: 0;
@@ -185,7 +185,7 @@ html,
         }
       }
     }
-    .numbers:nth-child(4) {
+    .numbers:nth-child(5) {
       div {
         p {
           transform: rotateZ(180deg);
@@ -342,22 +342,22 @@ html,
 
 @media screen and (min-width: 768px) {
   .page-container {
-    font-size: 2rem;
+    font-size: 1.75rem;
     .board-container {
       max-width: none;
-      width: 740px;
+      width: 700px;
       margin: 0 auto;
       .letters {
         height: 75px;
-        padding: 0 50px;
-        flex: 0 0 640px;
+        padding: 0 100px;
+        flex: 0 0 540px;
       }
       .numbers {
         flex: 0 1 50px;
       }
       .playfield {
-        height: 635px;
-        width: 640px;
+        height: 540px;
+        width: 600px;
         .board-row {
           .block {
             margin: 0;
@@ -375,10 +375,10 @@ html,
           }
         }
         .board-row {
-          height: 80px;
+          height: 68px;
           .block {
-            width: 75px;
-            height: 75px;
+            width: 63px;
+            height: 63px;
           }
         }
       }
