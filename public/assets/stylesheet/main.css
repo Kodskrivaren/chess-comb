@@ -141,7 +141,7 @@ html,
   align-items: center;
   text-align: center;
 }
-.page-container .board-container .letters:nth-child(2) div p {
+.page-container .board-container .letters:first-child div p {
   margin: 0;
   transform: rotateZ(180deg);
 }
@@ -155,7 +155,7 @@ html,
 .page-container .board-container .numbers div p {
   margin: 0;
 }
-.page-container .board-container .numbers:nth-child(5) div p {
+.page-container .board-container .numbers:nth-child(4) div p {
   transform: rotateZ(180deg);
 }
 .page-container .board-container .playfield {
@@ -286,41 +286,41 @@ html,
 
 @media screen and (min-width: 768px) {
   .page-container {
-    font-size: 1.25rem;
+    font-size: 2rem;
   }
   .page-container .board-container {
     max-width: none;
-    width: 480px;
+    width: 740px;
     margin: 0 auto;
   }
   .page-container .board-container .letters {
-    height: 50px;
+    height: 75px;
     padding: 0 50px;
-    flex: 0 0 380px;
+    flex: 0 0 640px;
   }
   .page-container .board-container .numbers {
-    flex: 0 1 25px;
+    flex: 0 1 50px;
   }
   .page-container .board-container .playfield {
-    height: 380px;
-    width: 600px;
+    height: 635px;
+    width: 640px;
   }
   .page-container .board-container .playfield .board-row .block {
     margin: 0;
     padding: 0;
   }
   .page-container .board-container .playfield .board-row .block:not(:last-child) {
-    border-right: 3px solid #85560f;
+    border-right: 5px solid #85560f;
   }
-  .page-container .board-container .playfield .board-row:not(:last-child) .bl48k {
-    border-bottom: 3px solid #85560f;
+  .page-container .board-container .playfield .board-row:not(:last-child) .block {
+    border-bottom: 5px solid #85560f;
   }
   .page-container .board-container .playfield .board-row {
-    height: 48px;
+    height: 80px;
   }
   .page-container .board-container .playfield .board-row .block {
-    width: 45px;
-    height: 45px;
+    width: 75px;
+    height: 75px;
   }
 }
 @media screen and (min-width: 2000px) {
@@ -330,26 +330,26 @@ html,
   }
   .page-container .board-container {
     max-width: none;
-    margin: 4vh auto;
-    width: 1000px;
+    margin: 7vh auto;
+    width: 1200px;
   }
   .page-container .board-container .letters {
-    flex: 0 0 760px;
+    flex: 0 0 1000px;
     padding: 0 100px;
   }
   .page-container .board-container .numbers {
     flex: 0 1 8%;
   }
   .page-container .board-container .playfield {
-    height: 760px;
-    width: 760px;
+    height: 995px;
+    width: 1000px;
   }
   .page-container .board-container .playfield .board-row {
-    height: 95px;
+    height: 125px;
   }
   .page-container .board-container .playfield .board-row .block {
-    width: 92px;
-    height: 92px;
+    width: 120px;
+    height: 120px;
   }
 }
 html,

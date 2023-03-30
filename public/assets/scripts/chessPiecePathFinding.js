@@ -483,9 +483,7 @@ function addEnPessant(moveBlocks, pessantInfo) {
     element: pessantInfo.moveBlock,
     func: () => {
       moveHere(pessantInfo.pieceId, pessantInfo.moveBlock.id, false, false);
-      const passantPiece = pessantInfo.attackBlock.children[0];
-      addCapturedPiece(passantPiece.src);
-      passantPiece.remove();
+      pessantInfo.attackBlock.children[0].remove();
       if (gameMode == "online") {
         socket.send(
           `en-pessant ${currentRoomId} ${pessantInfo.attackBlock.id}`
