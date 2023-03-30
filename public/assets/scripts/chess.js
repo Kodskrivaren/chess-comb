@@ -37,9 +37,9 @@ let blackPieceTimer = 85,
 (async () => {
   await Promise.all([jsonData]).then(async (response) => {
     chessPieces = await response[0].json();
-    // setMainMenu();
+    setMainMenu();
     createPlayfield();
-    localMultiplayerClick();
+    // localMultiplayerClick();
   });
 })();
 
@@ -69,7 +69,7 @@ function playAsWhite(choice) {
 }
 
 function startGame() {
-  // pageMenu.style = "visibility: hidden;";
+  pageMenu.style = "visibility: hidden;";
   resetSpecialMoves();
   blackCaptured.innerHTML = "";
   yellowCaptured.innerHTML = "";
