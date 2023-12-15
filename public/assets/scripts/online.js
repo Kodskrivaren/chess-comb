@@ -1,8 +1,8 @@
 let socket,
   currentRoomId = -1;
 
-function setUpSocketConnection(adress) {
-  socket = new WebSocket(adress, ["Test"]);
+function setUpSocketConnection(adress, password) {
+  socket = new WebSocket(adress, ["password", `${password}`]);
 
   socket.onopen = function (e) {
     console.log("Connection established");

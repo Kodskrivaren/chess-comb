@@ -28,10 +28,10 @@ function onlinePlayClick() {
 function attemptConnection() {
   const password = document.querySelector(".server-adress-input").value;
   const url = window.location.href;
-  const adress = `${url.includes("localhost") ? "ws" : "wss"}${url.substring(
+  const adress = `${isSecureContext ? "wss" : "ws"}${url.substring(
     url.indexOf(":"),
     url.length
-  )}?password=${password}`;
+  )}`;
   setUpSocketConnection(adress, password);
 }
 
