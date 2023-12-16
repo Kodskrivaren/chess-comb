@@ -2,11 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const ws = require("ws");
 const app = express();
+const path = require("path");
 
 const wss = new ws.Server({ noServer: true });
 const clients = new Set();
 
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
 const rooms = [
