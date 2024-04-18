@@ -238,9 +238,5 @@ const server = app.listen(Number(process.env.PORT), () => {
 });
 
 server.on("upgrade", (req, socket) => {
-  if (req.rawHeaders.includes(`password, ${process.env.PASSWORD}`)) {
-    accept(req, socket);
-  } else {
-    socket.end();
-  }
+  accept(req, socket);
 });

@@ -14,25 +14,17 @@ function setChoicesMenu() {
         <button class="btn" onclick="playAsWhite(true)">Play as White against AI</button>
         <button class="btn" onclick="playAsWhite(false)">Play as Black against AI</button>
         <button class="btn" onclick="localMultiplayerClick()">Play local multiplayer</button>
-        <button class="btn" onclick="onlinePlayClick()">Play online</button>
+        <button class="btn" onclick="attemptConnection()">Play online</button>
     </div>`;
 }
 
-function onlinePlayClick() {
-  pageMenu.innerHTML = `
-  <input type="password" class="server-adress-input" placeholder="Password"/>
-  <p class="page-title" id="serverMessage" hidden></p>
-  <button class="btn" onclick="attemptConnection()">Connect</button>`;
-}
-
 function attemptConnection() {
-  const password = document.querySelector(".server-adress-input").value;
   const url = window.location.href;
-  const adress = `${isSecureContext ? "wss" : "ws"}${url.substring(
+  const adress = `${!url.includes("localhost") ? "wss" : "ws"}${url.substring(
     url.indexOf(":"),
     url.length
   )}`;
-  setUpSocketConnection(adress, password);
+  setUpSocketConnection(adress);
 }
 
 function setGameOverScreen(winMessage) {
@@ -71,7 +63,7 @@ function setLostServerConnectionPage() {
   pageMenu.style = "";
   pageMenu.innerHTML = `
   <h2 class="page-title">Server connection lost!</h2>
-  <button class="btn" onclick="onlinePlayClick()">Return Multiplayer Screen</button>
+  <button class="btn" onclick="attemptConnection()">Return Multiplayer Screen</button>
   <button class="btn" onclick="setMainMenu()">Return to main menu</button>
   `;
 }
